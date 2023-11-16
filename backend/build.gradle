@@ -1,0 +1,90 @@
+buildscript {
+    ext {
+        queryDslVersion = "5.0.0"
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '2.7.15'
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
+}
+
+group = 'com.ssafy'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '11'
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+    testImplementation 'org.springframework.batch:spring-batch-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.awaitility:awaitility:4.2.0'
+    /* Lombok */
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    /* DataBase */
+    runtimeOnly 'com.h2database:h2'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    /* API */
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    /* querydsl */
+    implementation "com.querydsl:querydsl-jpa:${queryDslVersion}"
+    implementation "com.querydsl:querydsl-apt:${queryDslVersion}"
+    /* Security */
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+    /* JWT */
+    implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+    /* Swagger */
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.15'
+    /* p6spy */
+    implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1'
+
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.72.Final:osx-aarch_64'
+
+}
+
+/* querydsl Start */
+test {
+    useJUnitPlatform()
+}
+
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+    jpa = true
+    querydslSourcesDir = querydslDir
+}
+sourceSets {
+    main.java.srcDir querydslDir
+}
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl {
+    options.annotationProcessorPath = configurations.querydsl
+}
+/* querydsl End */
