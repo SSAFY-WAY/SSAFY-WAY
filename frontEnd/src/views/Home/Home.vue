@@ -10,6 +10,7 @@ const inputText = ref("");
   <div class="input-title text-primary">
     <span>어떤 집을 찾으세요?</span>
     <router-link to="/searchSubway">지하철로 찾기</router-link>
+    <router-link to="/searchKakao">지도로 찾기</router-link>
   </div>
   <InputSearch />
 </template>
@@ -37,7 +38,7 @@ const inputText = ref("");
   font-size: 30px;
   font-weight: bold;
 }
-.input-title :nth-child(2) {
+.input-title a {
   width: auto;
   padding: 10px;
   height: 4s0px;
@@ -50,7 +51,7 @@ const inputText = ref("");
   align-items: center;
   border-radius: 30px;
 }
-.input-title :nth-child(2):hover {
+.input-title a:hover {
   background-color: black;
 }
 </style>

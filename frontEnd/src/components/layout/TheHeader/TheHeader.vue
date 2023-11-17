@@ -37,10 +37,14 @@ const onClickLogoutHandler = (e) => {
 <style scoped>
 /* Container */
 .headerContainer {
+  position: fixed;
+  top: 0;
   width: 100vw;
   height: 90px;
   box-shadow: 0px 5px 5px -2px lightgray;
   border-bottom: 1px solid lightgray;
+  z-index: 999;
+  background-color: white;
 }
 /* Contents */
 .headerContent {

@@ -12,7 +12,7 @@
 <script setup>
 import { onMounted } from "vue";
 import aptInfo from "@/mocks/aptInfo.json";
-import { loadMap, loadScript } from "../../../util/KakaoMap";
+import { loadMap, loadScript } from "@/util/KakaoMap";
 const emit = defineEmits(["clickMarker"]);
 const clickMarker = (data) => {
   // 화면 우측에 UI 띄우기 -> 컴포넌트 visibility visible, 클릭한 위치의 데이터 전달 -> emit으로 방출
