@@ -22,6 +22,7 @@
           size="30px"
           color="white"
           class="close-icon"
+          @click="$emit('closeDetail')"
         ></v-icon>
       </div>
       <v-icon

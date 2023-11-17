@@ -31,6 +31,9 @@ const injectHouseInfo = (aptInfo) => {
   />
   <SearchAside />
   <template v-if="isShowDetail">
-    <HouseDetailAside :currentAptInfo="currentAptInfo" />
+    <HouseDetailAside
+      :currentAptInfo="currentAptInfo"
+      @close-detail="closeHouseDetail"
+    />
   </template>
 </template>
