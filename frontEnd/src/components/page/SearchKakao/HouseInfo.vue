@@ -1,10 +1,10 @@
 <template>
-  <path class="path" stroke-width="3" :d="props.path"></path>
+  <div>{{ houseInfo.price }} 만원</div>
 </template>
 
 <script setup>
 const props = defineProps({
-  path: String,
+  houseInfo: Object,
 });
 </script>
 

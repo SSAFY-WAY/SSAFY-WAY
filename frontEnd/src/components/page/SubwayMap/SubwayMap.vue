@@ -21,15 +21,23 @@
     "
   >
     <!-- path -->
-    <template v-for="station in SubwayInfo" :key="station.line">
+    <template v-for="(station, index) in SubwayInfo" :key="station.line">
       <g
-        :class="{ nonActive: !switchState[parseInt(station.line[1])] }"
+        :class="{ nonActive: !switchState[index + 1] }"
         fill="none"
         :stroke="station.color"
         stroke-linejoin="round"
         stroke-linecap="round"
       >
         <ThePath v-for="paths in station.path" :path="paths" />
+        <g>
+          <LineNumber
+            v-for="locs in station.lineNumber"
+            :locs="locs"
+            :color="station.color"
+            :line="index + 1"
+          />
+        </g>
       </g>
     </template>
     <!-- Station -->
@@ -43,12 +51,12 @@
         />
       </template>
     </g>
-    <!-- Label -->
   </svg>
 </template>
 <script setup>
 import ThePath from "./ThePath.vue";
 import Station from "./Station.vue";
+import LineNumber from "./LineNumber.vue";
 import SubwayNavigation from "./SubwayNavigation.vue";
 import { ref } from "vue";
 import SubwayInfo from "../../../assets/SubwayInfo.json";

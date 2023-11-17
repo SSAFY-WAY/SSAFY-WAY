@@ -40,6 +40,7 @@ const onClickLogoutHandler = (e) => {
   width: 100vw;
   height: 90px;
   box-shadow: 0px 5px 5px -2px lightgray;
+  border-bottom: 1px solid lightgray;
 }
 /* Contents */
 .headerContent {

@@ -9,7 +9,8 @@ import createVuetify from "@/plugins/vuetify";
 import { createPinia } from "pinia";
 
 // style
-import "./assets/main.css";
+import "@/assets/main.css";
+import "@/style/font.css";
 
 //Router
 import router from "./router";

@@ -1,0 +1,38 @@
+[
+  {
+    "title": "아파트1",
+    "latlng": [33.450705, 126.570677],
+    "house": [
+      { "measure": 20, "price": 15000, "floor": 3 },
+      { "measure": 30, "price": 18000, "floor": 3 },
+      { "measure": 40, "price": 19000, "floor": 3 }
+    ]
+  },
+  {
+    "title": "아파트2",
+    "latlng": [33.450936, 126.569477],
+    "house": [
+      { "measure": 20, "price": 15000, "floor": 3 },
+      { "measure": 30, "price": 18000, "floor": 3 },
+      { "measure": 40, "price": 19000, "floor": 3 }
+    ]
+  },
+  {
+    "title": "아파트3",
+    "latlng": [33.450879, 126.56994],
+    "house": [
+      { "measure": 20, "price": 15000, "floor": 3 },
+      { "measure": 30, "price": 18000, "floor": 3 },
+      { "measure": 40, "price": 19000, "floor": 3 }
+    ]
+  },
+  {
+    "title": "아파트4",
+    "latlng": [33.451393, 126.570738],
+    "house": [
+      { "measure": 20, "price": 15000, "floor": 3 },
+      { "measure": 30, "price": 18000, "floor": 3 },
+      { "measure": 40, "price": 19000, "floor": 3 }
+    ]
+  }
+]

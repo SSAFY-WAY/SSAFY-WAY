@@ -1,7 +1,9 @@
+//ANCHOR - script
 <script setup>
 import BaseInput from "../../components/common/Baseinput.vue";
 </script>
 
+//ANCHOR - template
 <template>
   <main class="container">
     <div class="signup-form-container">
@@ -29,6 +31,8 @@ import BaseInput from "../../components/common/Baseinput.vue";
     </div>
   </main>
 </template>
+
+//ANCHOR - style
 <style scoped>
 .container {
   width: 100vw;

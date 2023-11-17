@@ -16,6 +16,7 @@ defineProps({
 <style scoped>
 .fieldset {
   border: none;
+  padding: 10px;
 }
 .legend {
   font-size: 20px;

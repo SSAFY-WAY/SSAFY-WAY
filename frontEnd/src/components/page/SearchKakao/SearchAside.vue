@@ -31,7 +31,7 @@ const searchOptions = ref([{ title: "지역구" }, { title: "동" }]);
         :key="index"
         :category="opt.title"
       />
-      <button class="submitBtn">정보 조회</button>
+      <button class="searchOptions submitBtn">정보 조회</button>
     </form>
   </div>
 </template>
@@ -57,5 +57,18 @@ const searchOptions = ref([{ title: "지역구" }, { title: "동" }]);
   border-bottom: 1px solid lightgray;
   margin-bottom: 10px;
   font-size: 20px;
+  font-weight: bold;
+}
+.searchOptions.submitBtn {
+  width: 100%;
+  background-color: var(--primary);
+  color: white;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 17px;
+  padding: 5px;
+}
+.searchOptions.submitBtn:hover {
+  background-color: var(--dark1);
 }
 </style>

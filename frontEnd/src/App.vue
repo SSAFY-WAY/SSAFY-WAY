@@ -5,9 +5,12 @@ import TheHeader from "./components/layout/TheHeader/TheHeader.vue";
 <template>
   <v-app>
     <TheHeader />
-
-    <router-view></router-view>
+    <main class="main"><router-view></router-view></main>
   </v-app>
 </template>
 
-<style scoped></style>
+<style scoped>
+.main {
+  background-color: #f3f3f3;
+}
+</style>

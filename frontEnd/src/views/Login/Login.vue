@@ -10,7 +10,7 @@ const onClickLoginHandler = (e) => {
 };
 </script>
 <template>
-  <main class="container">
+  <section class="container">
     <div class="login-form-container">
       <form class="login-form">
         <strong>로그인</strong>
@@ -30,18 +30,17 @@ const onClickLoginHandler = (e) => {
         </button>
       </form>
     </div>
-  </main>
+  </section>
 </template>
 <style scoped>
 .container {
   width: 100vw;
   height: 100vh;
-  background-color: #f3f3f3;
 }
 .login-form-container {
   width: 400px;
   margin: 0px auto;
-  margin-top: 80px;
+  margin-top: 90px;
 }
 .login-form {
   padding: 20px;
