@@ -1,17 +1,20 @@
 <template>
   <div class="mapNavigateWrap">
-    <button
-      class="metroButton"
-      :class="{ nonActive: !props.switchState[number] }"
-      v-for="number in metroNumber"
-      :key="number"
-      @click="metroNavToggle(number)"
-      :style="{
-        backgroundColor: colors[number - 1],
-      }"
-    >
-      {{ number }} 호선
-    </button>
+    <div class="selectMetroLine">
+      <button
+        class="metroButton"
+        :class="{ nonActive: !props.switchState[number] }"
+        v-for="number in metroNumber"
+        :key="number"
+        @click="metroNavToggle(number)"
+        :style="{
+          backgroundColor: colors[number - 1],
+        }"
+      >
+        {{ number }} 호선
+      </button>
+    </div>
+    <div>hihihi</div>
   </div>
 </template>
 
@@ -44,13 +47,25 @@ const colors = [
 </script>
 
 <style scoped>
+.mapNavigateWrap {
+  display: flex;
+}
+.selectMetroLine {
+  margin-top: 20px;
+  margin-left: 20px;
+  border: 1px solid var(--primary);
+  padding: 10px;
+  width: 480px;
+  display: flex;
+  border-radius: 35px;
+  justify-content: space-around;
+}
 .metroButton {
-  width: 50px;
-  height: 30px;
-  border: 1px solid black;
-  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+
   color: white;
-  border-radius: 10px;
+  border-radius: 50%;
   font-size: 12px;
 }
 .nonActive {

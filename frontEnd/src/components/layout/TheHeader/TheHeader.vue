@@ -27,6 +27,7 @@ const onClickLogoutHandler = (e) => {
           <button @click="onClickLogoutHandler">로그아웃</button>
         </template>
         <template v-else>
+          <router-link to="signup" class="logout-widget">회원가입</router-link>
           <router-link to="login" class="logout-widget">로그인</router-link>
         </template>
       </div>
@@ -37,11 +38,11 @@ const onClickLogoutHandler = (e) => {
 <style scoped>
 /* Container */
 .headerContainer {
-  position: fixed;
+  /* position: fixed; */
   top: 0;
   width: 100vw;
   height: 90px;
-  box-shadow: 0px 5px 5px -2px lightgray;
+  /* box-shadow: 0px 5px 5px -2px lightgray; */
   border-bottom: 1px solid lightgray;
   z-index: 999;
   background-color: white;

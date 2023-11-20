@@ -1,14 +1,17 @@
 <script setup>
 import BaseInput from "../../components/common/Baseinput.vue";
-import router from "../../router";
 import { useUserStore } from "../../store/userStore";
+import router from "@/router";
+
 const userStore = useUserStore();
 const onClickLoginHandler = (e) => {
   e.preventDefault();
   userStore.permitAuth();
   // 이전 페이지로 되돌아가기
+  router.push({ name: "home" });
 };
 </script>
+
 <template>
   <section class="container">
     <div class="login-form-container">
