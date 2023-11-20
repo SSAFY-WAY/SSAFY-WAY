@@ -1,7 +1,5 @@
 package com.ssafy.ssafyway.housedetail.controller;
 
-import com.ssafy.ssafyway.auth.annotation.Authenticated;
-import com.ssafy.ssafyway.auth.vo.AuthMember;
 import com.ssafy.ssafyway.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.ssafyway.housedetail.data.dto.response.HouseDetailRecentViewResponse;
 import com.ssafy.ssafyway.housedetail.service.HouseDetailService;
@@ -21,9 +19,9 @@ public class HouseDetailController {
 
     @PostMapping("/auth/recent")
     public ResponseEntity<HouseDetailRecentViewResponse> recentView(
-            @Authenticated AuthMember authMember,
+            int memberId,
             @RequestBody HouseDetailRecentViewRequest request) {
-        HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(authMember, request);
+        HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(memberId, request);
         return ResponseEntity.ok(response);
     }
 }

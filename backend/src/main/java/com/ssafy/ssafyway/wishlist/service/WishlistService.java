@@ -1,6 +1,5 @@
 package com.ssafy.ssafyway.wishlist.service;
 
-import com.ssafy.ssafyway.auth.vo.AuthMember;
 import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
 import com.ssafy.ssafyway.housedetail.service.HouseDetailService;
 import com.ssafy.ssafyway.member.domain.Member;
@@ -50,9 +49,9 @@ public class WishlistService {
         return WishlistCreateResponse.of(memberID, houseId);
     }
 
-    public void remove(int wishlistId, AuthMember authMember) {
+    public void remove(int wishlistId, int memberId) {
         Wishlist wishlist = wishlistRepository
-                .findByIdAndMemberId(wishlistId, authMember.getMemberId())
+                .findByIdAndMemberId(wishlistId, memberId)
                 .orElseThrow(
                         () -> new WishlistException(WishlistErrorCode.ERROR_CLIENT_WITH_WISHLIST_IS_NOT_EXISTED));
         wishlist.removeRelated();

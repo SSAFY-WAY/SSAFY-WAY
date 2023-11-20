@@ -2,7 +2,6 @@ package com.ssafy.ssafyway.housedetail.service;
 
 import com.ssafy.ssafyway.api.seoulopendata.data.cond.ExistByDetailCond;
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
-import com.ssafy.ssafyway.auth.vo.AuthMember;
 import com.ssafy.ssafyway.housedetail.data.cond.HouseDetailRecentViewCond;
 import com.ssafy.ssafyway.housedetail.data.dto.request.HouseDetailRecentViewRequest;
 import com.ssafy.ssafyway.housedetail.data.dto.response.HouseDetailRecentViewResponse;
@@ -45,9 +44,9 @@ public class HouseDetailService {
                         HouseDetailErrorCode.ERROR_CLIENT_WITH_HOUSE_DETAIL_IS_NOT_EXISTED));
     }
 
-    public HouseDetailRecentViewResponse findByRecentView(AuthMember authMember,
+    public HouseDetailRecentViewResponse findByRecentView(int memberId,
                                                           HouseDetailRecentViewRequest request) {
-        Member findMember = memberService.findById(authMember.getMemberId());
+        Member findMember = memberService.findById(memberId);
         List<HouseDetailRecentViewVO> list = houseDetailRepository.findByRecentViewCond(
                         HouseDetailRecentViewCond.toCond(request))
                 .stream()
