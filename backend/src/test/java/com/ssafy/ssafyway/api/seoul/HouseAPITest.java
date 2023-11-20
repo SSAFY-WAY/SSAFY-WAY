@@ -36,7 +36,7 @@ class HouseAPITest extends ServiceTest {
 
         // when
         // then
-        Assertions.assertThatCode(() -> seoulOpenDataRentHouseAPI.filteringRentHouse(model))
+        Assertions.assertThatCode(() -> seoulOpenDataRentHouseAPI.filteringRentHouseByAPI(model))
                 .doesNotThrowAnyException();
     }
 }
