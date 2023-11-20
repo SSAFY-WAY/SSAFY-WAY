@@ -2,13 +2,35 @@
 import BaseInput from "../../components/common/Baseinput.vue";
 import { useUserStore } from "../../store/userStore";
 import router from "@/router";
+import { ref } from "vue";
 
 const userStore = useUserStore();
-const onClickLoginHandler = (e) => {
+const userData = ref({
+  email: "",
+  password: "",
+});
+const request = (e) => {
   e.preventDefault();
+  // 유효성 검사
+  if (!userData.value.email || !userData.value.password) {
+    console.log("no");
+    return;
+  }
   userStore.permitAuth();
   // 이전 페이지로 되돌아가기
   router.push({ name: "home" });
+
+  // 올바른 경우 axios 통신
+  // requestLogin(userData)
+  //   .then(() => {
+  //     console.log("성공");
+  //   })
+  //   .catch((err) => console.log(err));
+};
+
+const updateUserdata = (key, content) => {
+  userData.value[key] = content;
+  console.log(userData.value);
 };
 </script>
 
@@ -18,19 +40,21 @@ const onClickLoginHandler = (e) => {
       <form class="login-form">
         <strong>로그인</strong>
         <BaseInput
-          label="이메일"
+          :label="['이메일', 'email']"
           placeholder="예) example@ssafy.com"
           type="text"
+          :content="userData.email"
+          @update="updateUserdata"
         />
         <BaseInput
-          label="비밀번호"
+          :label="['비밀번호', 'password']"
           placeholder="비밀번호를 입력해주세요"
           type="password"
+          :content="userData.password"
+          @update="updateUserdata"
         />
 
-        <button class="login-button" @click="onClickLoginHandler">
-          로그인
-        </button>
+        <button class="login-button" @click="request">로그인</button>
       </form>
     </div>
   </section>
