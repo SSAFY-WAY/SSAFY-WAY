@@ -20,6 +20,7 @@ public class MemberMapper {
         PhoneNumber phoneNumber = PhoneNumber.from(request.getPhoneNumber());
 
         return Member.builder()
+                .name(request.getName())
                 .email(email)
                 .password(password)
                 .phoneNumber(phoneNumber)
