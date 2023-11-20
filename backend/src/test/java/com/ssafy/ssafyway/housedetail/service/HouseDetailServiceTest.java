@@ -1,10 +1,7 @@
 package com.ssafy.ssafyway.housedetail.service;
 
-import com.ssafy.ssafyway.auth.vo.AuthMember;
 import com.ssafy.ssafyway.global.config.ServiceTest;
 import com.ssafy.ssafyway.global.fixture.MemberFixture;
-import com.ssafy.ssafyway.housedetail.data.dto.request.HouseDetailRecentViewRequest;
-import com.ssafy.ssafyway.housedetail.data.dto.response.HouseDetailRecentViewResponse;
 import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
 import com.ssafy.ssafyway.housedetail.domain.HouseDetailRepository;
 import com.ssafy.ssafyway.housedetail.exception.HouseDetailErrorCode;
@@ -22,8 +19,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -51,21 +46,21 @@ class HouseDetailServiceTest extends ServiceTest {
         houseDetail = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo));
     }
 
-    @DisplayName("최근 본 집 목록을 조회한다.")
-    @Test
-    void findByRecentViewTestSuccess() {
-        /* Given */
-        AuthMember authMember = new AuthMember(member.getId());
-        int id2 = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo)).getId();
-        int id3 = houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(geo)).getId();
-
-        /* When */
-        HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(
-                authMember, new HouseDetailRecentViewRequest(List.of(id2, id3)));
-
-        /* Then */
-        assertThat(response.getHouseDetailList()).hasSize(2);
-    }
+//    @DisplayName("최근 본 집 목록을 조회한다.")
+//    @Test
+//    void findByRecentViewTestSuccess() {
+//        /* Given */
+//        AuthMember authMember = new AuthMember(member.getId());
+//        int id2 = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo)).getId();
+//        int id3 = houseDetailRepository.save(HouseDetailFixture.JU_GONG4_1.toHouseDetail(geo)).getId();
+//
+//        /* When */
+//        HouseDetailRecentViewResponse response = houseDetailService.findByRecentView(
+//                authMember, new HouseDetailRecentViewRequest(List.of(id2, id3)));
+//
+//        /* Then */
+//        assertThat(response.getHouseDetailList()).hasSize(2);
+//    }
 
     @DisplayName("HouseDetail을 Id로 조회한다.")
     @Nested

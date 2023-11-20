@@ -1,6 +1,5 @@
 package com.ssafy.ssafyway.wishlist.service;
 
-import com.ssafy.ssafyway.auth.vo.AuthMember;
 import com.ssafy.ssafyway.global.config.ServiceTest;
 import com.ssafy.ssafyway.global.fixture.MemberFixture;
 import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
@@ -88,7 +87,7 @@ class WishlistServiceTest extends ServiceTest {
                 .build());
 
         /* When */
-        wishlistService.remove(savedWishlist.getId(), new AuthMember(member.getId()));
+        wishlistService.remove(savedWishlist.getId(), member.getId());
 
         /* Then */
         WishlistViewResponse response = wishlistService.view(member.getId());
