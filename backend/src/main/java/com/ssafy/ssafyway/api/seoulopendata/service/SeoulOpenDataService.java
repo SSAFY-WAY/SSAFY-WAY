@@ -1,8 +1,10 @@
 package com.ssafy.ssafyway.api.seoulopendata.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.ssafyway.api.seoulopendata.data.cond.ExistByDetailCond;
 import com.ssafy.ssafyway.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.ssafyway.api.seoulopendata.data.dto.response.RentAPIResponse;
+import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentFile;
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
 import com.ssafy.ssafyway.housedetail.service.HouseDetailService;
@@ -12,9 +14,11 @@ import com.ssafy.ssafyway.region.domain.Region;
 import com.ssafy.ssafyway.region.service.RegionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,7 +33,7 @@ public class SeoulOpenDataService {
     private final SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
 
     /**
-     * 전세집 데이터를 추출 및 DB에 저장한다 .
+     * API를 호출하여 전세집 데이터를 추출 및 DB에 저장한다 .
      *
      * @param devide HouseData를 어느 정도로 줄인건지에 대한 param
      */
@@ -43,10 +47,25 @@ public class SeoulOpenDataService {
         for (int i = 1; i < totalCount; i += 999) {
             RentAPIResponse rentAPIResponse =
                     (RentAPIResponse) seoulOpenDataRentHouseAPI.fetchAPI(RentAPIRequest.toRequest(i, 999));
-            saveHouseData(seoulOpenDataRentHouseAPI.filteringRentHouse(rentAPIResponse));
+            saveHouseData(seoulOpenDataRentHouseAPI.filteringRentHouseByAPI(rentAPIResponse));
             log.info("data search {}%", (float) i / totalCount * 100);
         }
         log.info("fetchHouseData method end");
+    }
+
+    /**
+     * 파일을 읽어 전세집 데이터를 추출 및 DB에 저장한다 .
+     */
+    @Transactional
+    public void loadHouseData() throws IOException {
+        log.info("loadHouseData method start");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ClassPathResource resource = new ClassPathResource("서울시_전월세가.json");
+        RentFile file = objectMapper.readValue(resource.getInputStream(), RentFile.class);
+
+        saveHouseData(seoulOpenDataRentHouseAPI.filteringRentHouseByFile(file));
+        log.info("loadHouseData method end");
     }
 
     /**

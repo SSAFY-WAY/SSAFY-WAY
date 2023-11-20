@@ -5,6 +5,7 @@ import com.ssafy.ssafyway.api.core.dto.APIRequest;
 import com.ssafy.ssafyway.api.core.dto.APIResponse;
 import com.ssafy.ssafyway.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.ssafyway.api.seoulopendata.data.dto.response.RentAPIResponse;
+import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentFile;
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,10 +46,24 @@ public class SeoulOpenDataRentHouseFetchAPI implements FetchAPICore {
      * @param rentAPIResponse 공공데이터 API의 전세집 데이터
      * @return @link package.class#member label
      */
-    public List<RentRow> filteringRentHouse(RentAPIResponse rentAPIResponse) {
-        return rentAPIResponse.getTbLnOpendataRentV().getRow().stream()
+    public List<RentRow> filteringRentHouseByAPI(RentAPIResponse rentAPIResponse) {
+        return filtering(rentAPIResponse.getTbLnOpendataRentV().getRow());
+    }
+
+    /**
+     * 전세집 중 필요한 데이터만 추출하기 위한 필터링기능
+     *
+     * @param rentFile 공공데이터 File의 전세집 데이터
+     * @return @link package.class#member label
+     */
+    public List<RentRow> filteringRentHouseByFile(RentFile rentFile) {
+        return filtering(rentFile.getRow());
+    }
+
+    private List<RentRow> filtering(List<RentRow> rentRows) {
+        return rentRows.stream()
                 .filter(row -> row.getRentGbn().equals("전세"))
-                .filter(row -> row.getCntrctPrd().isBlank())
+                .filter(row -> row.getCntrctPrd() == null || row.getCntrctPrd().isBlank())
                 .filter(row -> isValid(row.getBobn()))
                 .filter(row -> isValid(row.getBubn()))
                 .filter(row -> isValid(row.getBjdongCd()))
