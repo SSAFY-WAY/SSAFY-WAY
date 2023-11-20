@@ -36,7 +36,7 @@ public enum MemberFixture {
     }
 
     public MemberSignupRequest toMemberSignupRequest() {
-        return new MemberSignupRequest(email, password, password, phoneNumber);
+        return new MemberSignupRequest(name, email, password, password, phoneNumber);
     }
 
     public Member toMember() {
