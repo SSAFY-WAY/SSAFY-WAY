@@ -14,25 +14,33 @@
         {{ number }} 호선
       </button>
     </div>
-    <div>hihihi</div>
+    <div v-if="selectedStations.length" class="stationBucket container">
+      <StationIcon
+        v-for="station in selectedStations"
+        :name="station.name"
+        :color="station.color"
+      />
+    </div>
+    <button class="searchButton">조회하기</button>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
-
+import StationIcon from "@/components/page/SubwayMap/StationIcon.vue";
+import { useStationStore } from "@/store/stationStore.js";
+import { storeToRefs } from "pinia";
 const props = defineProps({
   switchState: Array,
+  selectedStationState: Array,
 });
-console.log(props.switchState);
+const { selectedStations } = storeToRefs(useStationStore());
+// 노선도 색깔 로직
 const metroNumber = ref([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-const metroButton = ref("metroButton");
 const emit = defineEmits(["metroNavToggle"]);
-
 const metroNavToggle = (number) => {
   emit("metroNavToggle", number);
 };
-
 const colors = [
   "#052f93",
   "#10a643",
@@ -44,6 +52,7 @@ const colors = [
   "#e74e6d",
   "#b58600",
 ];
+// 지하철역 선택 로직
 </script>
 
 <style scoped>
@@ -57,7 +66,7 @@ const colors = [
   padding: 10px;
   width: 480px;
   display: flex;
-  border-radius: 35px;
+  border-radius: 3px;
   justify-content: space-around;
 }
 .metroButton {
@@ -70,5 +79,34 @@ const colors = [
 }
 .nonActive {
   opacity: 0.1;
+}
+.stationBucket.container {
+  width: auto;
+  margin-top: 15px;
+  margin-left: 100px;
+  height: 60px;
+  border: 2px solid var(--accent1);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 5px;
+}
+.searchButton {
+  margin-top: 25px;
+  margin-left: 20px;
+  width: auto;
+  padding: 10px;
+  height: 40px;
+  background-color: var(--dark2);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+}
+.searchButton:hover {
+  background-color: var(--primary);
 }
 </style>

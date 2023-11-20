@@ -41,7 +41,7 @@ const inputText = ref("");
 .input-title a {
   width: auto;
   padding: 10px;
-  height: 4s0px;
+  height: 40px;
   background-color: var(--dark2);
   color: white;
   font-size: 15px;
