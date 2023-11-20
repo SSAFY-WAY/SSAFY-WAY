@@ -1,6 +1,35 @@
 //ANCHOR - script
 <script setup>
-import BaseInput from "../../components/common/Baseinput.vue";
+import BaseInput from "@/components/common/Baseinput.vue";
+import { ref } from "vue";
+import { requestSignUp } from "@/apis/request/requestSignUp.js";
+import router from "@/router";
+
+const userData = ref({
+  email: "",
+  password: "",
+  validPassword: "",
+  phoneNumber: "",
+});
+const updateUserdata = (key, content) => {
+  userData.value[key] = content;
+};
+const request = (e) => {
+  e.preventDefault();
+  // userData 유효성 검사
+  if (userData.value.password !== userData.value.validPassword) {
+    console.log("오류");
+    return;
+  } else {
+    router.push({ name: "home" });
+  }
+  // 올바른 경우 axios 통신
+  // requestSignUp(userData)
+  //   .then(() => {
+  //     console.log("성공");
+  //   })
+  //   .catch((err) => console.log(err));
+};
 </script>
 
 //ANCHOR - template
@@ -9,24 +38,36 @@ import BaseInput from "../../components/common/Baseinput.vue";
     <div class="signup-form-container">
       <form class="signup-form">
         <strong>회원 가입</strong>
-        <BaseInput label="이름" placeholder="이름을 입력해주세요" type="text" />
         <BaseInput
-          label="이메일"
+          :label="['이메일', 'email']"
           placeholder="예) example@ssafy.com"
           type="text"
+          :content="userData.email"
+          @update="updateUserdata"
         />
         <BaseInput
-          label="비밀번호"
+          :label="['비밀번호', 'password']"
           placeholder="6~12자 영문,숫자를 조합해주세요"
           type="password"
+          :content="userData.password"
+          @update="updateUserdata"
         />
         <BaseInput
-          label="핸드폰 번호"
+          :label="['비밀번호 확인', 'validPassword']"
+          placeholder="6~12자 영문,숫자를 조합해주세요"
+          type="password"
+          :content="userData.validPassword"
+          @update="updateUserdata"
+        />
+        <BaseInput
+          :label="['핸드폰 번호', 'phoneNumber']"
           placeholder="예) 010-1234-5678"
           type="text"
+          :content="userData.phoneNumber"
+          @update="updateUserdata"
         />
 
-        <button class="signup-button">회원가입</button>
+        <button class="signup-button" @click="request">회원가입</button>
       </form>
     </div>
   </main>
