@@ -2,7 +2,7 @@ package com.ssafy.ssafyway.region.service;
 
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.ssafyway.global.config.MockitoTest;
-import com.ssafy.ssafyway.housedetail.fixture.RentRowFixture;
+import com.ssafy.ssafyway.house.fixture.RentRowFixture;
 import com.ssafy.ssafyway.region.data.cond.RegionFilterCond;
 import com.ssafy.ssafyway.region.domain.RegionRepository;
 import com.ssafy.ssafyway.region.exception.RegionErrorCode;

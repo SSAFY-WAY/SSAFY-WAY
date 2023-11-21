@@ -15,7 +15,7 @@ public class Subway {
     private static final double EARTH_RADIUS = 6371e3;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     @Embedded

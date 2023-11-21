@@ -1,15 +1,15 @@
 package com.ssafy.ssafyway.api.seoulopendata.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.ssafyway.api.seoulopendata.data.cond.ExistByDetailCond;
+import com.ssafy.ssafyway.api.seoulopendata.data.cond.ExistByHouseCond;
 import com.ssafy.ssafyway.api.seoulopendata.data.dto.request.RentAPIRequest;
 import com.ssafy.ssafyway.api.seoulopendata.data.dto.response.RentAPIResponse;
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentFile;
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
-import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
-import com.ssafy.ssafyway.housedetail.service.HouseDetailService;
-import com.ssafy.ssafyway.housegeo.domain.HouseGeo;
-import com.ssafy.ssafyway.housegeo.service.HouseGeoService;
+import com.ssafy.ssafyway.house.domain.House;
+import com.ssafy.ssafyway.house.service.HouseService;
+import com.ssafy.ssafyway.building.domain.Building;
+import com.ssafy.ssafyway.building.service.BuildingService;
 import com.ssafy.ssafyway.region.domain.Region;
 import com.ssafy.ssafyway.region.service.RegionService;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +28,8 @@ import java.util.Optional;
 public class SeoulOpenDataService {
 
     private final RegionService regionService;
-    private final HouseGeoService houseGeoService;
-    private final HouseDetailService houseDetailService;
+    private final BuildingService buildingService;
+    private final HouseService houseService;
     private final SeoulOpenDataRentHouseFetchAPI seoulOpenDataRentHouseAPI;
 
     /**
@@ -69,7 +69,7 @@ public class SeoulOpenDataService {
     }
 
     /**
-     * 전세집 데이터를 DB에 저장한다. 저장 테이블은 region, houseGeo, houseDetail 이다.
+     * 전세집 데이터를 DB에 저장한다. 저장 테이블은 region, building, house 이다.
      *
      * @param rentRows 공공데이터에서 뽑은 전세집 데이터들
      */
@@ -77,14 +77,14 @@ public class SeoulOpenDataService {
         for (RentRow row : rentRows) {
             try {
                 Region region = regionService.getRegion(row);
-                HouseGeo houseGeo = houseGeoService.getHouseGeo(row, region);
-                Optional<HouseDetail> optionalHouseDetail =
-                        houseDetailService.findByDataCond(ExistByDetailCond.from(row));
+                Building building = buildingService.getBuilding(row, region);
+                Optional<House> optionalHouseDetail =
+                        houseService.findByDataCond(ExistByHouseCond.from(row));
                 if (optionalHouseDetail.isPresent()) {
                     optionalHouseDetail.get().modifyUpdateDateByNow();
                     continue;
                 }
-                houseDetailService.saveHouseDetail(row, houseGeo);
+                houseService.saveHouseDetail(row, building);
             } catch (IndexOutOfBoundsException ignored) {
             }
         }

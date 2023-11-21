@@ -1,7 +1,7 @@
 package com.ssafy.ssafyway.wishlist.vo;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.ssafy.ssafyway.housegeo.domain.BuildingType;
+import com.ssafy.ssafyway.building.domain.BuildingType;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

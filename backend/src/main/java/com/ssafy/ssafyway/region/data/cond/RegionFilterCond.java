@@ -1,6 +1,6 @@
 package com.ssafy.ssafyway.region.data.cond;
 
-import com.ssafy.ssafyway.housegeo.data.dto.request.GeoSearchRequest;
+import com.ssafy.ssafyway.building.data.dto.request.BuildingSearchRequest;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class RegionFilterCond {
         this.legalDongCode = legalDongCode;
     }
 
-    public static RegionFilterCond from(GeoSearchRequest request) {
+    public static RegionFilterCond from(BuildingSearchRequest request) {
         return RegionFilterCond.builder()
                 .districtName(request.getDistrictName())
                 .districtCode(request.getDistrictCode())

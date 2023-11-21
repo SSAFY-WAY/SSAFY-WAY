@@ -1,11 +1,11 @@
 package com.ssafy.ssafyway.region.repository;
 
 import com.ssafy.ssafyway.global.config.RepositoryTest;
-import com.ssafy.ssafyway.housedetail.domain.HouseDetailRepository;
-import com.ssafy.ssafyway.housedetail.fixture.HouseDetailFixture;
-import com.ssafy.ssafyway.housegeo.domain.HouseGeo;
-import com.ssafy.ssafyway.housegeo.domain.HouseGeoRepository;
-import com.ssafy.ssafyway.housegeo.fixture.HouseGeoFixture;
+import com.ssafy.ssafyway.house.domain.HouseRepository;
+import com.ssafy.ssafyway.house.fixture.HouseFixture;
+import com.ssafy.ssafyway.building.domain.Building;
+import com.ssafy.ssafyway.building.domain.BuildingRepository;
+import com.ssafy.ssafyway.building.fixture.BuildingFixture;
 import com.ssafy.ssafyway.region.data.cond.RegionFilterCond;
 import com.ssafy.ssafyway.region.data.vo.DistrictVO;
 import com.ssafy.ssafyway.region.domain.Region;
@@ -25,9 +25,9 @@ class RegionRepositoryTest extends RepositoryTest {
     @Autowired
     private RegionRepository regionRepository;
     @Autowired
-    private HouseGeoRepository houseGeoRepository;
+    private BuildingRepository buildingRepository;
     @Autowired
-    private HouseDetailRepository houseDetailRepository;
+    private HouseRepository houseDetailRepository;
     private Region region;
 
     @BeforeEach
@@ -82,8 +82,8 @@ class RegionRepositoryTest extends RepositoryTest {
     void findByFilterCondSuccess() {
         /* Given */
         regionRepository.save(region);
-        HouseGeo geo = houseGeoRepository.save(HouseGeoFixture.GRAND_TOWER.toHouseGeo(region));
-        houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(geo));
+        Building geo = buildingRepository.save(BuildingFixture.GRAND_TOWER.toHouseGeo(region));
+        houseDetailRepository.save(HouseFixture.GRAND_TOWER_3.toHouseDetail(geo));
         RegionFilterCond cond = RegionFixture.REGION_ONE.toCond();
 
         /* When */

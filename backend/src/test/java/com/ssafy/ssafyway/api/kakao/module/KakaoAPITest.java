@@ -4,7 +4,7 @@ import com.ssafy.ssafyway.api.kakao.data.vo.Documents;
 import com.ssafy.ssafyway.api.kakao.service.KakaoMapFetchAPI;
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.ssafyway.global.config.ServiceTest;
-import com.ssafy.ssafyway.housedetail.fixture.RentRowFixture;
+import com.ssafy.ssafyway.house.fixture.RentRowFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,7 @@
 package com.ssafy.ssafyway.wishlist.service;
 
-import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
-import com.ssafy.ssafyway.housedetail.service.HouseDetailService;
+import com.ssafy.ssafyway.house.domain.House;
+import com.ssafy.ssafyway.house.service.HouseService;
 import com.ssafy.ssafyway.member.domain.Member;
 import com.ssafy.ssafyway.member.service.MemberService;
 import com.ssafy.ssafyway.wishlist.domain.Wishlist;
@@ -27,7 +27,7 @@ public class WishlistService {
 
     private final WishlistRepository wishlistRepository;
     private final MemberService memberService;
-    private final HouseDetailService houseDetailService;
+    private final HouseService houseService;
 
     private Member verifyLimit(int memberID) {
         Member findMember = memberService.findById(memberID);
@@ -39,11 +39,11 @@ public class WishlistService {
     @Transactional
     public WishlistCreateResponse create(int memberID, int houseId) {
         Member findMember = verifyLimit(memberID);
-        HouseDetail findHouseDetail = houseDetailService.findById(houseId);
+        House findHouse = houseService.findById(houseId);
 
         wishlistRepository.save(Wishlist.builder()
                 .member(findMember)
-                .houseDetail(findHouseDetail)
+                .house(findHouse)
                 .build()
         );
         return WishlistCreateResponse.of(memberID, houseId);
@@ -63,8 +63,8 @@ public class WishlistService {
         return WishlistViewResponse.from(wishlistVOList);
     }
 
-    public WishlistCheckResponse check(int memberId, int houseDetailId) {
-        boolean isWishlist = wishlistRepository.existsByMemberIdAndHouseDetailId(memberId, houseDetailId);
+    public WishlistCheckResponse check(int memberId, int houseId) {
+        boolean isWishlist = wishlistRepository.existsByMemberIdAndHouseId(memberId, houseId);
         return WishlistCheckResponse.from(isWishlist);
     }
 }
