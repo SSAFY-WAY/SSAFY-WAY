@@ -1,6 +1,6 @@
 package com.ssafy.ssafyway.subway.domain;
 
-import com.ssafy.ssafyway.subway.Points;
+import com.ssafy.ssafyway.global.domain.Points;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

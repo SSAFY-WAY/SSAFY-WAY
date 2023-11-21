@@ -1,6 +1,7 @@
 package com.ssafy.ssafyway.building.domain;
 
 import com.ssafy.ssafyway.global.domain.BaseEntity;
+import com.ssafy.ssafyway.global.domain.Points;
 import com.ssafy.ssafyway.house.domain.House;
 import com.ssafy.ssafyway.region.domain.Region;
 import lombok.AccessLevel;
@@ -28,11 +29,8 @@ public class Building extends BaseEntity {
     @Column(name = "building_id")
     private int id;
 
-    @Column(nullable = false)
-    private double longitude;
-
-    @Column(nullable = false)
-    private double latitude;
+    @Embedded
+    private Points points;
 
     @Column(nullable = false)
     private int bobn; // 본번
@@ -68,8 +66,7 @@ public class Building extends BaseEntity {
             int constructionYear,
             BuildingType buildingType) {
         addRelatedByRegion(region);
-        this.longitude = longitude;
-        this.latitude = latitude;
+        this.points = new Points(latitude, longitude);
         this.bobn = bobn;
         this.bubn = bubn;
         this.buildingName = buildingName;

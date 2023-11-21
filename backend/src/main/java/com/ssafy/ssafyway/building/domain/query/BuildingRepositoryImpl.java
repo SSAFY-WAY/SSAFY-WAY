@@ -3,7 +3,7 @@ package com.ssafy.ssafyway.building.domain.query;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.ssafy.ssafyway.building.data.cond.BuildingFilterCond;
 import com.ssafy.ssafyway.building.domain.Building;
-import com.ssafy.ssafyway.subway.Points;
+import com.ssafy.ssafyway.global.domain.Points;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -26,11 +26,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
                 .join(building.region, region)
                 .join(building.houseList, house).fetchJoin()
                 .where(building.region.id.eq(cond.getRegionId()))
-                .where(building.constructionYear.goe(cond.getBuildingYear()))
                 .where(building.buildingType.in(cond.getTypes()))
                 .where(house.area.between(cond.getMinArea(), cond.getMaxArea()))
                 .where(house.price.between(cond.getMinPrice(), cond.getMaxPrice()))
-//                .where(houseDetail.updateDate.eq(LocalDate.now()))    // TimeZone 설정으로 인한 주석 처리
                 .fetch();
     }
 

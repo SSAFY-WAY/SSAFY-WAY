@@ -1,4 +1,4 @@
-package com.ssafy.ssafyway.subway;
+package com.ssafy.ssafyway.global.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
