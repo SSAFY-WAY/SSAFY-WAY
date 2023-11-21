@@ -6,6 +6,7 @@ import { requestSignUp } from "@/apis/request/requestSignUp.js";
 import router from "@/router";
 
 const userData = ref({
+  name: "",
   email: "",
   password: "",
   validPassword: "",
@@ -18,17 +19,15 @@ const request = (e) => {
   e.preventDefault();
   // userData 유효성 검사
   if (userData.value.password !== userData.value.validPassword) {
-    console.log("오류");
+    alert("오류");
     return;
-  } else {
-    router.push({ name: "home" });
   }
-  // 올바른 경우 axios 통신
-  // requestSignUp(userData)
-  //   .then(() => {
-  //     console.log("성공");
-  //   })
-  //   .catch((err) => console.log(err));
+  requestSignUp(userData.value)
+    .then((data) => {
+      console.log(data);
+      router.push({ name: "home" });
+    })
+    .catch((err) => console.log(err));
 };
 </script>
 
@@ -38,6 +37,13 @@ const request = (e) => {
     <div class="signup-form-container">
       <form class="signup-form">
         <strong>회원 가입</strong>
+        <BaseInput
+          :label="['이름', 'name']"
+          placeholder="예) 김싸피"
+          type="text"
+          :content="userData.name"
+          @update="updateUserdata"
+        />
         <BaseInput
           :label="['이메일', 'email']"
           placeholder="예) example@ssafy.com"

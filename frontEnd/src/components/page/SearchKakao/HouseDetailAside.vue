@@ -3,6 +3,7 @@
 법정동
 건물명
 종류
+
 임대면적
 보증금
 임대료
@@ -15,8 +16,8 @@
     <!-- 아파트 이미지 -->
     <section class="houseImg container">
       <div class="houseImg content">
-        <span>대치동 은마아파트</span>
-        <span>건축년도 : 2003.11</span>
+        <span>{{ currentBuildingInfo.buildingName }}</span>
+        <span>건축년도 : {{ currentBuildingInfo.builtYear }}년</span>
         <v-icon
           icon="mdi-close"
           size="30px"
@@ -35,9 +36,9 @@
     <!-- 평수 별 매물 조회 버튼 -->
     <section class="houseInfoNav container">
       <strong class="houseInfoNav title">면적 별 매물 정보</strong>
-      <ul class="houseInfoNav items">
+      <!-- <ul class="houseInfoNav items">
         <button
-          v-for="(house, index) in currentAptInfo.house"
+          v-for="(house, index) in currentBuildingInfo.houseDetailList"
           :key="index"
           @click="
             (e) => {
@@ -48,13 +49,41 @@
           class="houseInfoNav item"
           :class="[selectedHouseIndex === index ? 'active' : '']"
         >
-          {{ house.measure }} 평
+          {{ house.area }} 평
         </button>
-      </ul>
+      </ul> -->
+      <v-sheet class="mx-auto" max-width="1000">
+        <v-slide-group show-arrows>
+          <v-slide-group-item
+            v-for="(house, index) in currentBuildingInfo.houseDetailList"
+            :key="index"
+            v-slot="{ isSelected, toggle }"
+          >
+            <v-btn
+              class="ma-2"
+              rounded
+              compact
+              :color="isSelected ? 'primary' : undefined"
+              @click="
+                () => {
+                  toggle();
+                  selectHouse(index);
+                }
+              "
+              size="small"
+            >
+              {{ house.floor }} 층
+            </v-btn>
+          </v-slide-group-item>
+        </v-slide-group>
+      </v-sheet>
     </section>
     <!-- 매물 상세 정보  -->
     <section class="houseInfo container">
-      <HouseInfo :houseInfo="currentAptInfo.house[selectedHouseIndex]" />
+      <HouseInfo
+        :houseInfo="currentBuildingInfo.houseDetailList[selectedHouseIndex]"
+        :regionName="props.regionName"
+      />
     </section>
     <!-- 로드뷰 -->
     <section class="roadview container">
@@ -68,10 +97,11 @@
 import { onMounted, ref, watch, computed } from "vue";
 import HouseInfo from "@/components/page/SearchKakao/HouseInfo.vue";
 const props = defineProps({
-  currentAptInfo: Object,
+  currentBuildingInfo: Object,
+  regionName: String,
 });
-const currentAptInfo = computed(() => {
-  return props.currentAptInfo;
+const currentBuildingInfo = computed(() => {
+  return props.currentBuildingInfo;
 });
 const selectedHouseIndex = ref(0);
 const selectHouse = (index) => {
@@ -85,21 +115,21 @@ onMounted(() => {
   const roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
   const roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
   const position = new kakao.maps.LatLng(
-    currentAptInfo.value.latlng[0],
-    currentAptInfo.value.latlng[1]
+    currentBuildingInfo.value.lat,
+    currentBuildingInfo.value.lng
   );
   // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
   roadviewClient.getNearestPanoId(position, 50, function (panoId) {
     roadview.setPanoId(panoId, position); //panoId와 중심좌표를 통해 로드뷰 실행
   });
 });
-watch(currentAptInfo, () => {
+watch(currentBuildingInfo, () => {
   const roadviewContainer = document.getElementById("roadview"); //로드뷰를 표시할 div
   const roadview = new kakao.maps.Roadview(roadviewContainer); //로드뷰 객체
   const roadviewClient = new kakao.maps.RoadviewClient(); //좌표로부터 로드뷰 파노ID를 가져올 로드뷰 helper객체
   const position = new kakao.maps.LatLng(
-    currentAptInfo.value.latlng[0],
-    currentAptInfo.value.latlng[1]
+    currentBuildingInfo.value.lat,
+    currentBuildingInfo.value.lng
   );
   // 특정 위치의 좌표와 가까운 로드뷰의 panoId를 추출하여 로드뷰를 띄운다.
   roadviewClient.getNearestPanoId(position, 500, function (panoId) {
@@ -119,7 +149,7 @@ watch(currentAptInfo, () => {
   position: absolute;
   float: right;
   background-color: white;
-  width: 25%;
+  width: 30%;
   height: auto;
   max-height: 605px;
   overflow-y: scroll;
@@ -152,6 +182,7 @@ watch(currentAptInfo, () => {
   width: 100%;
   height: auto;
   padding: 15px;
+  border-bottom: 1px solid lightgray;
 }
 
 .houseInfoNav.items {
@@ -209,7 +240,7 @@ watch(currentAptInfo, () => {
   border-bottom: 2px solid var(--primary);
 }
 .houseInfo {
-  border: 1px solid black;
-  padding: 0 15px 0 15px;
+  border-bottom: 1px solid lightgray;
+  padding: 10px 15px 10px 15px;
 }
 </style>

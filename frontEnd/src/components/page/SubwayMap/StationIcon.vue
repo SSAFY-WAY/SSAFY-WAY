@@ -43,12 +43,12 @@ const { deleteStation } = useStationStore();
 }
 .close {
   position: absolute;
-  top: 0;
-  right: 0;
-  padding: 2px;
+  top: -2px;
+  right: -5px;
+  padding: 8px;
   background-color: white;
   border-radius: 10px;
-  border: 1px solid var(--primary);
+  border: 1px solid lightgray;
   cursor: pointer;
 }
 </style>

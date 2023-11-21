@@ -90,6 +90,7 @@ const colors = [
   justify-content: space-around;
   align-items: center;
   border-radius: 5px;
+  background-color: #f3f3f3;
 }
 .searchButton {
   margin-top: 25px;
@@ -97,7 +98,7 @@ const colors = [
   width: auto;
   padding: 10px;
   height: 40px;
-  background-color: var(--dark2);
+  background-color: var(--primary);
   color: white;
   font-size: 15px;
   font-weight: bold;
@@ -107,6 +108,6 @@ const colors = [
   border-radius: 30px;
 }
 .searchButton:hover {
-  background-color: var(--primary);
+  background-color: var(--light1);
 }
 </style>
