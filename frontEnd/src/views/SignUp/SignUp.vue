@@ -19,13 +19,13 @@ const request = (e) => {
   e.preventDefault();
   // userData 유효성 검사
   if (userData.value.password !== userData.value.validPassword) {
-    alert("오류");
+    alert("비밀번호가 일치하지 않습니다.");
     return;
   }
   requestSignUp(userData.value)
     .then((data) => {
-      console.log(data);
-      router.push({ name: "home" });
+      alert("회원가입 성공");
+      router.push({ name: "login" });
     })
     .catch((err) => console.log(err));
 };

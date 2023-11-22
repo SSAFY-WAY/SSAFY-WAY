@@ -31,7 +31,7 @@ const { deleteStation } = useStationStore();
   min-width: 40px;
   height: 40px;
   color: white;
-  border-radius: 30px;
+  border-radius: 10px;
   padding: 15px;
   display: flex;
   justify-content: center;

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, computed } from "vue";
 
-import SearchTitle from "./SearchTitle.vue";
+import SearchTitle from "@/components/common/SearchTitle.vue";
 
 import { requestDistrict } from "@/apis/request/requestDistrict.js";
 import { requestLegalDong } from "@/apis/request/requestLegalDong.js";
@@ -55,7 +55,6 @@ const getLegalDong = () => {
 // 매물 정보 호출 -> emit으로 파라미터 방출
 const getBuildingList = (e) => {
   e.preventDefault();
-  console.log(requestData.value);
   requestBuilding(requestData.value)
     .then((buildingList) => {
       console.log(buildingList.data);

@@ -13,24 +13,24 @@ const request = (e) => {
   e.preventDefault();
   // 유효성 검사
   if (!userData.value.email || !userData.value.password) {
-    console.log("no");
+    alert("");
     return;
   }
   userStore.permitAuth();
-  // 이전 페이지로 되돌아가기
   router.push({ name: "home" });
-
-  // 올바른 경우 axios 통신
   // requestLogin(userData)
   //   .then(() => {
-  //     console.log("성공");
+  //     userStore.permitAuth();
+  //     // 이전 페이지로 되돌아가기
+  //     router.push({ name: "home" });
   //   })
-  //   .catch((err) => console.log(err));
+  //   .catch(() => {
+  //     alert("로그인 오류입니다.");
+  //   });
 };
 
 const updateUserdata = (key, content) => {
   userData.value[key] = content;
-  console.log(userData.value);
 };
 </script>
 
