@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.ssafyway.subway.data.SubwayVO;
 import com.ssafy.ssafyway.subway.domain.Subway;
 import com.ssafy.ssafyway.subway.domain.SubwayRepository;
+import com.ssafy.ssafyway.subway.exception.SubwayErrorCode;
+import com.ssafy.ssafyway.subway.exception.SubwayException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
@@ -45,7 +47,6 @@ public class SubwayService {
                 .forEach(subwayRepository::save);
     }
 
-
     public List<Subway> getSubwayList(List<String> subwayNameList) {
         return subwayNameList.stream()
                 .map(this::findByName)
@@ -54,6 +55,6 @@ public class SubwayService {
 
     public Subway findByName(String name) {
        return subwayRepository.findSubwayByName(name)
-               .orElseThrow(RuntimeException::new);
+               .orElseThrow(() -> new SubwayException(SubwayErrorCode.ERROR_CLIENT_BY_SUBWAY_IS_NOT_EXIST));
     }
 }
