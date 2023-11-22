@@ -10,16 +10,16 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Getter
-public class BuildingSearchResponse {
+public class BuildingSearchByRegionResponse {
     private String regionName;  // 자치구 + 법정동
-    private List<BuildingSearchByRegionVO> houseGeoList;
-    private int houseGeoCount;
+    private List<BuildingSearchByRegionVO> buildingList;
+    private int buildingCount;
 
-    public static BuildingSearchResponse of(Region region, List<BuildingSearchByRegionVO> list) {
-        return BuildingSearchResponse.builder()
+    public static BuildingSearchByRegionResponse of(Region region, List<BuildingSearchByRegionVO> buildingList) {
+        return BuildingSearchByRegionResponse.builder()
                 .regionName(String.format("%s %s", region.getDistrictName(), region.getLegalDongName()))
-                .houseGeoList(list)
-                .houseGeoCount(list.size())
+                .buildingList(buildingList)
+                .buildingCount(buildingList.size())
                 .build();
     }
 }

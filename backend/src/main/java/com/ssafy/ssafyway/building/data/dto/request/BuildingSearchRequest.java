@@ -1,23 +1,17 @@
 package com.ssafy.ssafyway.building.data.dto.request;
 
 import com.ssafy.ssafyway.building.domain.BuildingType;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
-public class BuildingSearchRequest {
-    private String districtName;
-    private String legalDongName;
-    private int districtCode;
-    private int legalDongCode;
+public abstract class BuildingSearchRequest {
     private int minPrice;
     private int maxPrice;
     private int minArea;
     private int maxArea;
     private List<BuildingType> types;
-    private int buildingYear;
 }
