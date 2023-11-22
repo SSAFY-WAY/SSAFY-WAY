@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -33,7 +35,7 @@ public class SubwayService {
         log.info("loadSubwayData method end");
     }
 
-    public void saveSubwayData(List<SubwayVO> subwayVOs) {
+    private void saveSubwayData(List<SubwayVO> subwayVOs) {
         subwayVOs.stream()
                 .filter(subwayVO -> !subwayRepository.existsByName(subwayVO.getName()))
                 .map(subwayVO -> Subway.of(
@@ -43,4 +45,15 @@ public class SubwayService {
                 .forEach(subwayRepository::save);
     }
 
+
+    public List<Subway> getSubwayList(List<String> subwayNameList) {
+        return subwayNameList.stream()
+                .map(this::findByName)
+                .collect(Collectors.toCollection(ArrayList::new));
+    }
+
+    public Subway findByName(String name) {
+       return subwayRepository.findSubwayByName(name)
+               .orElseThrow(RuntimeException::new);
+    }
 }
