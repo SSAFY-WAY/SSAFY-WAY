@@ -13,12 +13,13 @@ import java.util.stream.Collectors;
 @SuperBuilder
 @Getter
 public abstract class BuildingSearchVO {
+    protected String buildingName;
+    protected String regionName;
     protected double lat;
-    private double lng;
-    private String buildingName;
-    private int builtYear;
-    private List<HouseVO> houseList;
-    private int houseCount;
+    protected double lng;
+    protected int builtYear;
+    protected List<HouseVO> houseList;
+    protected int houseCount;
 
     protected static List<HouseVO> getHouseList(Building building) {
         return building.getHouseList().stream()

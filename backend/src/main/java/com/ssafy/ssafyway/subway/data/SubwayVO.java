@@ -1,19 +1,17 @@
 package com.ssafy.ssafyway.subway.data;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ssafy.ssafyway.global.domain.Points;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
+import javax.persistence.Embedded;
+
 @ToString
+@Builder
 @Getter
 public class SubwayVO {
-    @JsonProperty("Code")
-    private String code;
-    @JsonProperty("Name")
     private String name;
-
-    @JsonProperty("Line")
-    private String line;
-    private String x;
-    private String y;
+    @Embedded
+    private Points points;
 }
