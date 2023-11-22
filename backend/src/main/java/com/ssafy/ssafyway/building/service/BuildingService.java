@@ -13,6 +13,8 @@ import com.ssafy.ssafyway.building.data.vo.BuildingSearchBySubwayVO;
 import com.ssafy.ssafyway.building.data.vo.SubwayProximity;
 import com.ssafy.ssafyway.building.domain.Building;
 import com.ssafy.ssafyway.building.domain.BuildingRepository;
+import com.ssafy.ssafyway.building.exception.BuildingErrorCode;
+import com.ssafy.ssafyway.building.exception.BuildingException;
 import com.ssafy.ssafyway.building.mapper.BuildingMapper;
 import com.ssafy.ssafyway.global.domain.Points;
 import com.ssafy.ssafyway.region.data.cond.RegionFilterCond;
@@ -116,6 +118,6 @@ public class BuildingService {
 
     private Building findById(int buildingId) {
         return buildingRepository.findById(buildingId)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new BuildingException(BuildingErrorCode.ERROR_CLIENT_BY_BUILDING_IS_NOT_EXIST));
     }
 }
