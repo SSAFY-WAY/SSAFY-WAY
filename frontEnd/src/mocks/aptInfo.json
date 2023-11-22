@@ -1,12 +1,12 @@
 {
   "regionName": "송파구 거여동",
-  "houseGeoList": [
+  "buildingList": [
     {
       "lat": 37.4858913956217,
       "lng": 127.141969488077,
       "buildingName": "APICE",
       "builtYear": 2023,
-      "houseDetailList": [
+      "houseList": [
         {
           "houseDetailId": 36,
           "price": 40000,
@@ -21,7 +21,7 @@
       "lng": 127.141819329884,
       "buildingName": "우성르보아 위례",
       "builtYear": 2023,
-      "houseDetailList": [
+      "houseList": [
         {
           "houseDetailId": 57,
           "price": 35000,
@@ -42,7 +42,7 @@
       "lng": 127.143041350559,
       "buildingName": "수아주 오피스텔",
       "builtYear": 2022,
-      "houseDetailList": [
+      "houseList": [
         {
           "houseDetailId": 58,
           "price": 16500,
@@ -75,7 +75,7 @@
       "lng": 127.142144182511,
       "buildingName": "송파 풍산 리치안",
       "builtYear": 2022,
-      "houseDetailList": [
+      "houseList": [
         {
           "houseDetailId": 142,
           "price": 20000,
@@ -90,7 +90,7 @@
       "lng": 127.146928873882,
       "buildingName": "대영빌딩",
       "builtYear": 2002,
-      "houseDetailList": [
+      "houseList": [
         {
           "houseDetailId": 216,
           "price": 7718,

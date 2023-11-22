@@ -20,22 +20,22 @@ const selectedDistrict = ref({});
 const selectedLegalDong = ref({});
 const requestData = computed(() => {
   return {
-    districtName: selectedDistrict.value.name,
-    legalDongName: selectedLegalDong.value.name,
-    districtCode: selectedDistrict.value.code,
-    legalDongCode: selectedLegalDong.value.code,
     minPrice: 0,
     maxPrice: 100000000,
     minArea: 0,
     maxArea: 100,
     types: ["오피스텔", "아파트", "연립다세대", "단독다가구"],
-    buildingYear: 10,
+    districtName: selectedDistrict.value.name,
+    legalDongName: selectedLegalDong.value.name,
+    districtCode: selectedDistrict.value.code,
+    legalDongCode: selectedLegalDong.value.code,
   };
 });
 //자치구 호출 : 특정 도시 클릭 -> 자치구 api 호출 -> 자치구 html태그 내용 업데이트
 const getDistrict = () => {
   requestDistrict()
     .then((data) => {
+      console.log(data);
       districtList.value = data.data.districtList;
     })
     .catch((err) => {
