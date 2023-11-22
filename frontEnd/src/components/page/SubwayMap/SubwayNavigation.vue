@@ -20,7 +20,7 @@
 
     <!-- requestDataBox-->
   </div>
-  <span v-if="selectedStations.length" class="request container">
+  <span class="request container">
     <div class="stationBucket container">
       선택한 역
       <StationIcon
@@ -43,7 +43,7 @@
       >
         <!-- <template v-slot:thumb-label="{ dist }">{{ dist }}M </template> -->
       </v-slider>
-      <button class="searchButton" @click="requestData">조회하기</button>
+      <button class="searchButton" @click="sendRequestData">조회하기</button>
     </div>
   </span>
 </template>
@@ -55,15 +55,23 @@ import { useStationStore } from "@/store/stationStore.js";
 import { storeToRefs } from "pinia";
 const props = defineProps({
   switchState: Array,
-  // selectedStationState: Array,
 });
 // pinia에서 지하철 역 데이터 관리
 const { selectedStations } = storeToRefs(useStationStore());
 // 노선도 색깔 로직
 const metroNumber = ref([1, 2, 3, 4, 5, 6, 7, 8, 9]);
-const emit = defineEmits(["metroNavToggle"]);
+const emit = defineEmits(["metroNavToggle", "sendRequestData"]);
 const metroNavToggle = (number) => {
   emit("metroNavToggle", number);
+};
+// 반경 범위 로직
+
+const sendRequestData = () => {
+  emit(
+    "sendRequestData",
+    selectedStations.value.map((e) => e.name),
+    distance.value
+  );
 };
 const colors = [
   "#052f93",
@@ -76,8 +84,6 @@ const colors = [
   "#e74e6d",
   "#b58600",
 ];
-
-// 반경 범위 로직
 const distance = ref(0);
 </script>
 

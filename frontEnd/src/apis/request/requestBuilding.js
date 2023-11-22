@@ -5,4 +5,8 @@ const requestBuilding = (data) => {
   return axiosInstance.post(API_PATH.BUILDING, data);
 };
 
-export { requestBuilding };
+const requestBuildingBySubway = (data) => {
+  return axiosInstance.post(API_PATH.SUBWAY, data);
+};
+
+export { requestBuildingBySubway, requestBuilding };
