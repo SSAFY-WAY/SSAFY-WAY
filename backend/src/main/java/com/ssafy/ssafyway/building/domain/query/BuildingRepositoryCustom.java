@@ -2,7 +2,7 @@ package com.ssafy.ssafyway.building.domain.query;
 
 import com.ssafy.ssafyway.building.data.cond.BuildingFilterCond;
 import com.ssafy.ssafyway.building.domain.Building;
-import com.ssafy.ssafyway.subway.Points;
+import com.ssafy.ssafyway.global.domain.Points;
 
 import java.util.List;
 

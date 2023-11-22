@@ -35,9 +35,9 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustom {
     @Override
     public List<Building> findByBoundary(Points minPoints, Points maxPoints) {
         return query.selectFrom(building)
-                .where(building.latitude
+                .where(building.points.lat
                         .between(minPoints.getLat(), maxPoints.getLat())
-                    .and(building.longitude
+                    .and(building.points.lng
                         .between(minPoints.getLng(), maxPoints.getLng())))
                 .fetch();
     }

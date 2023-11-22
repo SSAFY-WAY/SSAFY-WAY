@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegionController {
     private final RegionService regionService;
 
-    @GetMapping("/auth/find/district")
+    @GetMapping("/find/district")
     public ResponseEntity<DistrictResponse> searchDistrict() {
         DistrictResponse response = regionService.findDistrictAll();
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/auth/find/legal")
+    @GetMapping("/find/legal")
     public ResponseEntity<LegalDongResponse> searchLegalDong(@RequestParam int districtCode) {
         LegalDongResponse response = regionService.findLegalDongAll(districtCode);
         return ResponseEntity.ok(response);
