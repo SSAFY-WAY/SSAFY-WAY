@@ -23,12 +23,14 @@ const onClickLogoutHandler = (e) => {
 
       <div class="userWidgetBox">
         <template v-if="userStore.isLogin === true">
-          <div>마이페이지</div>
-          <button @click="onClickLogoutHandler">로그아웃</button>
+          <router-link to="home" class="login widget">마이페이지</router-link>
+          <button class="login widget" @click="onClickLogoutHandler">
+            로그아웃
+          </button>
         </template>
         <template v-else>
-          <router-link to="signup" class="logout-widget">회원가입</router-link>
-          <router-link to="login" class="logout-widget">로그인</router-link>
+          <router-link to="signup" class="logout widget">회원가입</router-link>
+          <router-link to="login" class="logout widget">로그인</router-link>
         </template>
       </div>
     </section>
@@ -90,5 +92,15 @@ const onClickLogoutHandler = (e) => {
   display: flex;
   width: 200px;
   justify-content: space-around;
+}
+
+/* Header Widget */
+.widget {
+  width: 80px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  border: 1px solid var(--primary);
+  border-radius: 15px;
 }
 </style>
