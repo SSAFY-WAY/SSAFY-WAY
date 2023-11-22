@@ -1,6 +1,5 @@
 package com.ssafy.ssafyway.building.data.vo;
 
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.ssafy.ssafyway.building.domain.Building;
 import com.ssafy.ssafyway.house.data.vo.HouseVO;
 import com.ssafy.ssafyway.region.domain.Region;
@@ -14,12 +13,10 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @SuperBuilder
 @Getter
-@JsonPropertyOrder({ "buildingName", "regionName", "lat", "lng", "builtYear", "nearestSubwayName", "distanceFromSubway", "houseCount", "houseList" })
 public class BuildingSearchBySubwayVO extends BuildingSearchVO{
 
     private String nearestSubwayName;
     private int distanceFromSubway; // 단위 : m
-    private String regionName;
 
     public static BuildingSearchBySubwayVO of(SubwayProximity subwayProximity, Building building) {
         List<HouseVO> detailList = getHouseList(building);

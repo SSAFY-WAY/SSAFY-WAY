@@ -21,6 +21,7 @@ import com.ssafy.ssafyway.region.data.cond.RegionFilterCond;
 import com.ssafy.ssafyway.region.domain.Region;
 import com.ssafy.ssafyway.region.service.RegionService;
 import com.ssafy.ssafyway.subway.domain.Subway;
+import com.ssafy.ssafyway.subway.mapper.SubwayMapper;
 import com.ssafy.ssafyway.subway.service.SubwayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -56,11 +57,11 @@ public class BuildingService {
 
     public BuildingSearchByRegionResponse findByRegion(BuildingSearchByRegionRequest request) {
         Region findRegion = regionService.findByFilter(RegionFilterCond.from(request));
-        List<BuildingSearchByRegionVO> buildingList = buildingRepository
-                .findByFilterCond(BuildingFilterCond.of(findRegion.getId(), request))
-                .stream().map(BuildingSearchByRegionVO::from)
-                .collect(Collectors.toList());
-        return BuildingSearchByRegionResponse.of(findRegion, buildingList);
+        List<BuildingSearchByRegionVO> buildingList = buildingRepository.findByFilterCond(BuildingFilterCond.of(findRegion.getId(), request))
+            .stream()
+            .map(building -> BuildingSearchByRegionVO.of(findRegion, building))
+            .collect(Collectors.toList());
+        return BuildingSearchByRegionResponse.of(buildingList);
     }
 
     public BuildingSearchBySubwayResponse findBySubway(BuildingSearchBySubwayRequest request) {
@@ -73,7 +74,7 @@ public class BuildingService {
             SubwayProximity subwayProximity = entry.getValue();
             resultList.add(BuildingSearchBySubwayVO.of(subwayProximity, findById(buildingId)));
         }
-        return BuildingSearchBySubwayResponse.from(resultList);
+        return BuildingSearchBySubwayResponse.of(SubwayMapper.toSubwayVOs(subwayList), resultList, limDist);
     }
 
     private Map<Integer, SubwayProximity> mapByProximity(List<Subway> subwayList, double limitDist) {

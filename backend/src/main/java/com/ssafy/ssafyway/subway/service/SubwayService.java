@@ -2,7 +2,7 @@ package com.ssafy.ssafyway.subway.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.ssafyway.subway.data.SubwayVO;
+import com.ssafy.ssafyway.subway.data.SubwayJsonVO;
 import com.ssafy.ssafyway.subway.domain.Subway;
 import com.ssafy.ssafyway.subway.domain.SubwayRepository;
 import com.ssafy.ssafyway.subway.exception.SubwayErrorCode;
@@ -31,19 +31,19 @@ public class SubwayService {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ClassPathResource resource = new ClassPathResource("지하철역.json");
-        List<SubwayVO> subwayVOs = objectMapper.readValue(resource.getInputStream(), new TypeReference<>(){});
+        List<SubwayJsonVO> subways = objectMapper.readValue(resource.getInputStream(), new TypeReference<>(){});
 
-        saveSubwayData(subwayVOs);
+        saveSubwayData(subways);
         log.info("loadSubwayData method end");
     }
 
-    private void saveSubwayData(List<SubwayVO> subwayVOs) {
-        subwayVOs.stream()
-                .filter(subwayVO -> !subwayRepository.existsByName(subwayVO.getName()))
-                .map(subwayVO -> Subway.of(
-                    subwayVO.getName(),
-                    Double.parseDouble(subwayVO.getY()),
-                    Double.parseDouble(subwayVO.getX())))
+    private void saveSubwayData(List<SubwayJsonVO> subwayJsonVOs) {
+        subwayJsonVOs.stream()
+                .filter(subwayJsonVO -> !subwayRepository.existsByName(subwayJsonVO.getName()))
+                .map(subwayJsonVO -> Subway.of(
+                    subwayJsonVO.getName(),
+                    Double.parseDouble(subwayJsonVO.getLat()),
+                    Double.parseDouble(subwayJsonVO.getLng())))
                 .forEach(subwayRepository::save);
     }
 
