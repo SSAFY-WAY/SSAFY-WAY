@@ -1,9 +1,9 @@
 const API_PATH = {
   USER_SIGNUP: "member/signup",
   USER_LOGIN: "auth/login",
-  DISTRICT: "region/auth/find/district",
-  LEGAL: "region/auth/find/legal",
-  BUILDING: "geo/auth/search",
+  DISTRICT: "region/find/district",
+  LEGAL: "region/find/legal",
+  BUILDING: "building/search-region",
 };
 
 export { API_PATH };

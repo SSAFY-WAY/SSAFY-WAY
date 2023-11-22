@@ -148,6 +148,9 @@ const distance = ref(0);
   color: var(--accent4);
   font-weight: bold;
 }
+.request.container:hover {
+  background-color: white;
+}
 .button.container {
   display: flex;
   margin-top: 10px;

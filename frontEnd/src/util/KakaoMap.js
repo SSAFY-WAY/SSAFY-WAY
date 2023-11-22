@@ -1,8 +1,8 @@
 import getImageUrl from "@/util/getUrl.js";
 
 const loadMap = (buildingInfo, clickMarker) => {
-  if (buildingInfo.houseGeoList.length === 0) return;
-  const firstEl = buildingInfo.houseGeoList[0];
+  if (buildingInfo.buildingList.length === 0) return;
+  const firstEl = buildingInfo.buildingList[0];
   const container = document.getElementById("map");
   const options = {
     center: new kakao.maps.LatLng(firstEl.lat, firstEl.lng),
@@ -13,8 +13,8 @@ const loadMap = (buildingInfo, clickMarker) => {
 
   // 마커 이미지의 이미지 주소입니다
   const imageSrc = getImageUrl("home_image1.png");
-  for (let i = 0; i < buildingInfo.houseGeoList.length; i++) {
-    const building = buildingInfo.houseGeoList[i];
+  for (let i = 0; i < buildingInfo.buildingList.length; i++) {
+    const building = buildingInfo.buildingList[i];
     // 마커 이미지의 이미지 크기 입니다
     const imageSize = new kakao.maps.Size(45, 45);
 
@@ -36,7 +36,7 @@ const loadMap = (buildingInfo, clickMarker) => {
   // marker.setMap(map);
 };
 const loadScript = (buildingInfo, clickMarker) => {
-  if (buildingInfo.houseGeoList.length === 0) return;
+  if (buildingInfo.buildingList.length === 0) return;
   const script = document.createElement("script");
   script.src = `//dapi.kakao.com/v2/maps/sdk.js?appkey=${
     import.meta.env.VITE_KAKAO_KEY

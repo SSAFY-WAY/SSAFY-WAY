@@ -29,17 +29,17 @@ const { deleteStation } = useStationStore();
 .stationIcon {
   margin: 5px;
   min-width: 40px;
-  height: 40px;
+  height: 30px;
   color: white;
   border-radius: 10px;
   padding: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  font-size: 13px;
   background-color: gray;
   position: relative;
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 .close {
   position: absolute;

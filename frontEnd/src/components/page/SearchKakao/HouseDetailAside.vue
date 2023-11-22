@@ -55,7 +55,7 @@
       <v-sheet class="mx-auto" max-width="1000">
         <v-slide-group show-arrows>
           <v-slide-group-item
-            v-for="(house, index) in currentBuildingInfo.houseDetailList"
+            v-for="(house, index) in currentBuildingInfo.houseList"
             :key="index"
             v-slot="{ isSelected, toggle }"
           >
@@ -81,7 +81,7 @@
     <!-- 매물 상세 정보  -->
     <section class="houseInfo container">
       <HouseInfo
-        :houseInfo="currentBuildingInfo.houseDetailList[selectedHouseIndex]"
+        :houseInfo="currentBuildingInfo.houseList[selectedHouseIndex]"
         :regionName="props.regionName"
       />
     </section>
