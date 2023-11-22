@@ -61,7 +61,7 @@ public class SeoulOpenDataService {
         log.info("loadHouseData method start");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ClassPathResource resource = new ClassPathResource("서울시_전월세가.json");
+        ClassPathResource resource = new ClassPathResource("서울특별시_전월세가_2.json");
         RentFile file = objectMapper.readValue(resource.getInputStream(), RentFile.class);
 
         saveHouseData(seoulOpenDataRentHouseAPI.filteringRentHouseByFile(file));
