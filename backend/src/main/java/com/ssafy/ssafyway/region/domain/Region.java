@@ -2,7 +2,7 @@ package com.ssafy.ssafyway.region.domain;
 
 import com.ssafy.ssafyway.api.seoulopendata.data.vo.RentRow;
 import com.ssafy.ssafyway.global.domain.BaseEntity;
-import com.ssafy.ssafyway.housegeo.domain.HouseGeo;
+import com.ssafy.ssafyway.building.domain.Building;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +42,7 @@ public class Region extends BaseEntity {
     private String legalDongName;
 
     @OneToMany(mappedBy = "region", fetch = FetchType.LAZY)
-    private List<HouseGeo> houseGeoList = new ArrayList<>();
+    private List<Building> buildingList = new ArrayList<>();
 
     @Builder
     public Region(int districtCode, String districtName, int legalDongCode, String legalDongName) {

@@ -7,6 +7,5 @@ import java.util.Optional;
 
 public interface WishlistRepository extends JpaRepository<Wishlist, Integer>, WishlistRepositoryCustom {
     Optional<Wishlist> findByIdAndMemberId(int wishlistId, int memberId);
-
-    boolean existsByMemberIdAndHouseDetailId(int memberId, int houseDetailId);
+    boolean existsByMemberIdAndHouseId(int memberId, int houseId);
 }

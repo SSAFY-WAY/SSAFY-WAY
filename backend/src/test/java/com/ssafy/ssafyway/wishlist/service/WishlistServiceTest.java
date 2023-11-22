@@ -1,14 +1,13 @@
 package com.ssafy.ssafyway.wishlist.service;
 
-import com.ssafy.ssafyway.auth.vo.AuthMember;
 import com.ssafy.ssafyway.global.config.ServiceTest;
 import com.ssafy.ssafyway.global.fixture.MemberFixture;
-import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
-import com.ssafy.ssafyway.housedetail.domain.HouseDetailRepository;
-import com.ssafy.ssafyway.housedetail.fixture.HouseDetailFixture;
-import com.ssafy.ssafyway.housegeo.domain.HouseGeo;
-import com.ssafy.ssafyway.housegeo.domain.HouseGeoRepository;
-import com.ssafy.ssafyway.housegeo.fixture.HouseGeoFixture;
+import com.ssafy.ssafyway.house.domain.House;
+import com.ssafy.ssafyway.house.domain.HouseRepository;
+import com.ssafy.ssafyway.house.fixture.HouseFixture;
+import com.ssafy.ssafyway.building.domain.Building;
+import com.ssafy.ssafyway.building.domain.BuildingRepository;
+import com.ssafy.ssafyway.building.fixture.BuildingFixture;
 import com.ssafy.ssafyway.member.domain.Member;
 import com.ssafy.ssafyway.region.domain.Region;
 import com.ssafy.ssafyway.region.domain.RegionRepository;
@@ -34,20 +33,20 @@ class WishlistServiceTest extends ServiceTest {
     @Autowired
     private RegionRepository regionRepository;
     @Autowired
-    private HouseGeoRepository houseGeoRepository;
+    private BuildingRepository buildingRepository;
     @Autowired
-    private HouseDetailRepository houseDetailRepository;
+    private HouseRepository houseDetailRepository;
     @Autowired
     private WishlistRepository wishlistRepository;
     private Member member;
-    private HouseDetail houseDetail;
+    private House house;
 
     @BeforeEach
     void setup() {
         member = saveMember(MemberFixture.SHINHAN);
         Region region = regionRepository.save(RegionFixture.REGION_ONE.toRegion());
-        HouseGeo houseGeo = houseGeoRepository.save(HouseGeoFixture.GRAND_TOWER.toHouseGeo(region));
-        houseDetail = houseDetailRepository.save(HouseDetailFixture.GRAND_TOWER_3.toHouseDetail(houseGeo));
+        Building building = buildingRepository.save(BuildingFixture.GRAND_TOWER.toHouseGeo(region));
+        house = houseDetailRepository.save(HouseFixture.GRAND_TOWER_3.toHouseDetail(building));
     }
 
     @DisplayName("위시리스트를 저장한다.")
@@ -55,13 +54,13 @@ class WishlistServiceTest extends ServiceTest {
     void saveTestSuccess() {
         /* Given */
         /* When */
-        WishlistCreateResponse response = wishlistService.create(member.getId(), houseDetail.getId());
+        WishlistCreateResponse response = wishlistService.create(member.getId(), house.getId());
 
         /* Then */
         assertAll(
                 () -> assertThat(response).isNotNull(),
                 () -> assertThat(Objects.requireNonNull(response).getMemberId()).isEqualTo(member.getId()),
-                () -> assertThat(Objects.requireNonNull(response).getHouseId()).isEqualTo(houseDetail.getId())
+                () -> assertThat(Objects.requireNonNull(response).getHouseId()).isEqualTo(house.getId())
         );
     }
 
@@ -69,7 +68,7 @@ class WishlistServiceTest extends ServiceTest {
     @Test
     void viewTestSuccess() {
         /* Given */
-        wishlistService.create(member.getId(), houseDetail.getId());
+        wishlistService.create(member.getId(), house.getId());
 
         /* When */
         WishlistViewResponse response = wishlistService.view(member.getId());
@@ -84,11 +83,11 @@ class WishlistServiceTest extends ServiceTest {
         /* Given */
         Wishlist savedWishlist = wishlistRepository.save(Wishlist.builder()
                 .member(member)
-                .houseDetail(houseDetail)
+                .house(house)
                 .build());
 
         /* When */
-        wishlistService.remove(savedWishlist.getId(), new AuthMember(member.getId()));
+        wishlistService.remove(savedWishlist.getId(), member.getId());
 
         /* Then */
         WishlistViewResponse response = wishlistService.view(member.getId());

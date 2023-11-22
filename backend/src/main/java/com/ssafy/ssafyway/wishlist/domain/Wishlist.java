@@ -1,6 +1,6 @@
 package com.ssafy.ssafyway.wishlist.domain;
 
-import com.ssafy.ssafyway.housedetail.domain.HouseDetail;
+import com.ssafy.ssafyway.house.domain.House;
 import com.ssafy.ssafyway.member.domain.Member;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,12 +24,12 @@ public class Wishlist {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "house_id")
-    private HouseDetail houseDetail;
+    private House house;
 
     @Builder
-    public Wishlist(Member member, HouseDetail houseDetail) {
+    public Wishlist(Member member, House house) {
         addRelatedMember(member);
-        addRelatedByHouse(houseDetail);
+        addRelatedByHouse(house);
     }
 
     private void addRelatedMember(Member member) {
@@ -37,13 +37,13 @@ public class Wishlist {
         member.getWishlists().add(this);
     }
 
-    private void addRelatedByHouse(HouseDetail houseDetail) {
-        this.houseDetail = houseDetail;
-        houseDetail.getWishlists().add(this);
+    private void addRelatedByHouse(House house) {
+        this.house = house;
+        house.getWishlists().add(this);
     }
 
     public void removeRelated() {
         member.getWishlists().remove(this);
-        houseDetail.getWishlists().remove(this);
+        house.getWishlists().remove(this);
     }
 }

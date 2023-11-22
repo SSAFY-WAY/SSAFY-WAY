@@ -1,6 +1,5 @@
 package com.ssafy.ssafyway.global.fixture;
 
-import com.ssafy.ssafyway.auth.dto.request.LoginRequest;
 import com.ssafy.ssafyway.member.data.dto.request.MemberSignupRequest;
 import com.ssafy.ssafyway.member.domain.Member;
 import com.ssafy.ssafyway.member.domain.embbeded.Email;
@@ -46,9 +45,5 @@ public enum MemberFixture {
                 .password(Password.of(password, password, new BCryptPasswordEncoder()))
                 .phoneNumber(PhoneNumber.from(phoneNumber))
                 .build();
-    }
-
-    public LoginRequest toLoginRequest() {
-        return LoginRequest.builder().email(email).password(password).build();
     }
 }

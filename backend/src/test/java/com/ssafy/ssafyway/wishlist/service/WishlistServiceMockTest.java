@@ -25,7 +25,7 @@ public class WishlistServiceMockTest extends MockitoTest {
     @Test
     public void checkWishlistTest(){
         /* Given */
-        given(wishlistRepository.existsByMemberIdAndHouseDetailId(anyInt(),anyInt())).willReturn(true);
+        given(wishlistRepository.existsByMemberIdAndHouseId(anyInt(),anyInt())).willReturn(true);
 
         /* When */
         WishlistCheckResponse response = wishlistService.check(1,1);

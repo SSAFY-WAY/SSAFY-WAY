@@ -8,11 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.EntityManager;
 import java.util.List;
 
-import static com.ssafy.ssafyway.housedetail.domain.QHouseDetail.houseDetail;
-import static com.ssafy.ssafyway.housegeo.domain.QHouseGeo.houseGeo;
+
+import static com.ssafy.ssafyway.building.domain.QBuilding.building;
+import static com.ssafy.ssafyway.wishlist.domain.QWishlist.wishlist;
 import static com.ssafy.ssafyway.member.domain.QMember.member;
 import static com.ssafy.ssafyway.region.domain.QRegion.region;
-import static com.ssafy.ssafyway.wishlist.domain.QWishlist.wishlist;
+import static com.ssafy.ssafyway.house.domain.QHouse.house;
 
 @Slf4j
 public class WishlistRepositoryImpl implements WishlistRepositoryCustom {
@@ -25,24 +26,24 @@ public class WishlistRepositoryImpl implements WishlistRepositoryCustom {
     @Override
     public List<WishlistVO> findByMemberId(int memberId) {
         return query.select(new QWishlistVO(
-                                houseDetail.id,
+                                house.id,
                                 region.districtName,
                                 region.legalDongName,
-                                houseGeo.buildingName,
-                                houseGeo.latitude,
-                                houseGeo.longitude,
-                                houseDetail.area,
-                                houseDetail.price,
-                                houseGeo.constructionYear,
-                                houseDetail.floor,
-                                houseGeo.buildingType
+                                building.buildingName,
+                                building.points.lat,
+                                building.points.lng,
+                                house.area,
+                                house.price,
+                                building.constructionYear,
+                                house.floor,
+                                building.buildingType
                         )
                 )
                 .from(wishlist)
                 .join(wishlist.member, member)
-                .join(wishlist.houseDetail, houseDetail)
-                .join(houseDetail.houseGeo, houseGeo)
-                .join(houseGeo.region, region)
+                .join(wishlist.house, house)
+                .join(house.building, building)
+                .join(building.region, region)
                 .where(wishlist.member.id.eq(memberId))
                 .fetch();
     }
