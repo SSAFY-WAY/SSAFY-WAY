@@ -2,6 +2,7 @@
   <SubwayNavigation
     @metro-nav-toggle="metroNavToggle"
     :switchState="switchState"
+    @send-request-data="requestSubwayData"
   />
   <SubwayMap :switchState="switchState" />
 </template>
@@ -10,13 +11,13 @@
 import SubwayMap from "@/components/page/SubwayMap/SubwayMap.vue";
 import SubwayNavigation from "@/components/page/SubwayMap/SubwayNavigation.vue";
 import { ref } from "vue";
+import router from "@/router";
 
 // 노선도 색깔 상태 관리
 const currOn = ref(9);
 const switchState = ref(new Array(10).fill(true));
 const metroNavToggle = (number) => {
   // 최초 다 켜진 상태에서는 모두 꺼주기
-
   if (currOn.value === 9) {
     switchState.value = new Array(10).fill(false);
     currOn.value = 1;
@@ -33,6 +34,25 @@ const metroNavToggle = (number) => {
     switchState.value = new Array(10).fill(true);
     currOn.value = 9;
   }
+};
+
+// 지하철 데이터 요청 보내기
+const requestSubwayData = (stations, distance) => {
+  const data = {
+    minPrice: 0,
+    maxPrice: 1000000000,
+    minArea: 0,
+    maxArea: 1000,
+    types: ["오피스텔", "아파트", "연립다세대", "단독다가구"],
+    subwayNameList: stations,
+    distance: distance,
+  };
+  router.push({
+    name: "searchKakao",
+    state: {
+      data: data,
+    },
+  });
 };
 </script>
 

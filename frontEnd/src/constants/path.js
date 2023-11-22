@@ -4,6 +4,7 @@ const API_PATH = {
   DISTRICT: "region/find/district",
   LEGAL: "region/find/legal",
   BUILDING: "building/search-region",
+  SUBWAY: "building/search-subway",
 };
 
 export { API_PATH };
