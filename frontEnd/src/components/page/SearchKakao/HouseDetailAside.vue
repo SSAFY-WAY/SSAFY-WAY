@@ -168,8 +168,8 @@ watch(currentBuildingInfo, () => {
   float: right;
   background-color: white;
   width: 30%;
-  height: 100vh;
-  max-height: 605px;
+  height: 100%;
+  max-height: 730px;
   overflow-y: scroll;
   -ms-overflow-style: none;
   z-index: 99;
@@ -177,6 +177,7 @@ watch(currentBuildingInfo, () => {
   right: 0;
   background-color: white;
   visibility: visible;
+  height: 100%;
 }
 .houseDetail.container::-webkit-scrollbar {
   display: none;
