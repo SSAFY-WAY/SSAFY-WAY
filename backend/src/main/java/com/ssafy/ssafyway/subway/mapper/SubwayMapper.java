@@ -12,7 +12,7 @@ public class SubwayMapper {
     public static List<SubwayVO> toSubwayVOs(List<Subway> subways) {
         return subways.stream()
                 .map(subway -> SubwayVO.builder()
-                        .name(subway.getName())
+                        .name(subway.getName() + "역")
                         .points(subway.getPoints())
                         .build())
                 .collect(Collectors.toList());
