@@ -18,9 +18,9 @@ const closeHouseDetail = () => {
   if (isShowDetail.value) isShowDetail.value = false;
 };
 // BuildingList by 법정동 조회 정보
-const buildingList = ref(mockInfo);
+const buildingData = ref(mockInfo);
 const getBuildingList = (data) => {
-  buildingList.value = data;
+  buildingData.value = data;
   type.value = "legal";
 };
 // 현재 매물 데이터 업데이트
@@ -52,13 +52,12 @@ onMounted(() => {
         getHouseInfo(buildingInfo);
       }
     "
-    :buildingList="buildingList"
+    :buildingList="buildingData"
   />
   <SearchAside @building-list="getBuildingList" />
   <template v-if="isShowDetail">
     <HouseDetailAside
       :currentBuildingInfo="currentBuildingInfo"
-      :regionName="buildingList.regionName"
       @close-detail="closeHouseDetail"
     />
   </template>

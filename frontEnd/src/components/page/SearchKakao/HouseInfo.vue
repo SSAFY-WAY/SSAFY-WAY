@@ -21,6 +21,7 @@ const props = defineProps({
   houseInfo: Object,
   regionName: String,
 });
+console.log(props.regionName);
 const transferPrice = (price) => {
   return [parseInt(price / 10000), parseInt(price % 10000)];
 };

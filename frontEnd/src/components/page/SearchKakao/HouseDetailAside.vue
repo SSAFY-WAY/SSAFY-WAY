@@ -89,7 +89,7 @@
       <section class="houseInfo container">
         <HouseInfo
           :houseInfo="currentBuildingInfo.houseList[selectedHouseIndex]"
-          :regionName="props.regionName"
+          :regionName="currentBuildingInfo.regionName"
         />
       </section>
       <!-- 로드뷰 -->
@@ -111,8 +111,8 @@ import HouseInfo from "@/components/page/SearchKakao/HouseInfo.vue";
 import { useUserStore } from "@/store/userStore.js";
 const props = defineProps({
   currentBuildingInfo: Object,
-  regionName: String,
 });
+console.l;
 const currentBuildingInfo = computed(() => {
   return props.currentBuildingInfo;
 });

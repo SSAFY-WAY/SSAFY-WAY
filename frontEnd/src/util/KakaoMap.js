@@ -12,13 +12,27 @@ const loadMap = (buildingInfo, clickMarker) => {
   // 마커를 표시할 위치와 title 객체 배열입니다
 
   // 마커 이미지의 이미지 주소입니다
-  const imageSrc = getImageUrl("home_image1.png");
+  const colorMap = {};
+  const colorFontMap = {};
+  const colorFont = ["#8BDE72", "#916ECB", "#BA5E68", "#0FCD83", "#17C6EA"];
+  if (buildingInfo.setDistance) {
+    for (let i = 0; i < buildingInfo.subwayList.length; i++) {
+      const name = buildingInfo.subwayList[i].name;
+      colorMap[name] = getImageUrl(`${5 - i}.png`);
+      colorFontMap[name] = colorFont[4 - i];
+    }
+  }
+
   for (let i = 0; i < buildingInfo.buildingList.length; i++) {
     const building = buildingInfo.buildingList[i];
     // 마커 이미지의 이미지 크기 입니다
-    const imageSize = new kakao.maps.Size(40, 40);
+    const imageSize = new kakao.maps.Size(33, 33);
 
     // 마커 이미지를 생성합니다
+    let imageSrc = buildingInfo.setDistance
+      ? colorMap[building.nearestSubwayName]
+      : getImageUrl("5.png");
+
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
     // 마커를 생성합니다
@@ -29,28 +43,93 @@ const loadMap = (buildingInfo, clickMarker) => {
       image: markerImage, // 마커 이미지
     });
     kakao.maps.event.addListener(marker, "click", () => {
+      moveMap(marker.getPosition());
       clickMarker(building);
     });
   }
+  /**************** buildingInfo[지하철]이 존재하면? (지하철 검색이면) -> 지하철역 마커 띄우기*/
+  if (buildingInfo.setDistance) {
+    const imageSrc = getImageUrl("metro.png");
+    const points = [];
+    var bounds = new kakao.maps.LatLngBounds();
+    for (let i = 0; i < buildingInfo.subwayList.length; i++) {
+      const subway = buildingInfo.subwayList[i];
+      // 중심 좌표를 잡기 위해 points만 따로 저장하기
+      const subwayPoint = new kakao.maps.LatLng(
+        subway.points.lat,
+        subway.points.lng
+      );
+      points.push(points);
 
-  // marker.setMap(map);
+      // 마커 이미지의 이미지 크기 입니다
+      const imageSize = new kakao.maps.Size(33, 33);
 
-  // buildingInfo[지하철]이 존재하면? (지하철 검색이면) -> 지하철역 마커 띄우기
-  var circle = new kakao.maps.Circle({
-    center: new kakao.maps.LatLng(33.450701, 126.570667), // 원의 중심좌표 입니다
-    radius: 50, // 미터 단위의 원의 반지름입니다
-    strokeWeight: 5, // 선의 두께입니다
-    strokeColor: "#75B8FA", // 선의 색깔입니다
-    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-    strokeStyle: "dashed", // 선의 스타일 입니다
-    fillColor: "#CFE7FF", // 채우기 색깔입니다
-    fillOpacity: 0.7, // 채우기 불투명도 입니다
-  });
+      // 마커 이미지를 생성합니다
+      const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-  // 지도에 원을 표시합니다
-  circle.setMap(map);
-  // 지하철역과 distance를 통해 마커 동그라미 설정
+      // 마커를 생성합니다
+      const stationMarker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        // clickable: true,
+        position: subwayPoint, // 마커를 표시할 위치
+        title: subway.name, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image: markerImage, // 마커 이미지
+      });
+      stationMarker.setMap(map);
+      // 마커에 클릭이벤트 할당
+
+      bounds.extend(subwayPoint);
+      setBounds();
+
+      let $customOverlay = document.createElement("div");
+      $customOverlay.className = "customoverlay";
+      $customOverlay.addEventListener("click", () => {
+        moveMap(subwayPoint);
+      });
+      $customOverlay.innerHTML =
+        `  <a target="_blank" style="background-color : ${
+          colorFontMap[`${subway.name}`]
+        }" >` +
+        `    <span class="title">${subway.name}</span>` +
+        "  </a>";
+
+      // 커스텀 오버레이가 표시될 위치입니다
+
+      // 커스텀 오버레이를 생성합니다
+      var customOverlay = new kakao.maps.CustomOverlay({
+        map: map,
+        position: stationMarker.getPosition(),
+        content: $customOverlay,
+        yAnchor: 1,
+      });
+      customOverlay.setMap(map);
+      // ****************************************원 그리기
+      var circle = new kakao.maps.Circle({
+        center: new kakao.maps.LatLng(subway.points.lat, subway.points.lng), // 원의 중심좌표 입니다
+        radius: buildingInfo.setDistance, // 미터 단위의 원의 반지름입니다
+        strokeWeight: 1, // 선의 두께입니다
+        strokeColor: "#75B8FA", // 선의 색깔입니다
+        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: "line", // 선의 스타일 입니다
+        fillColor: "#E3F2FD", // 채우기 색깔입니다
+        fillOpacity: 0.5, // 채우기 불투명도 입니다
+      });
+
+      // 지도에 원을 표시합니다
+      circle.setMap(map);
+    }
+
+    function setBounds() {
+      // LatLngBounds 객체에 추가된 좌표들을 기준으로 지도의 범위를 재설정합니다
+      // 이때 지도의 중심좌표와 레벨이 변경될 수 있습니다
+      map.setBounds(bounds);
+    }
+  }
+  function moveMap(subwayPoint) {
+    map.panTo(subwayPoint);
+  }
 };
+
 const loadScript = (buildingInfo, clickMarker) => {
   if (buildingInfo.buildingList.length === 0) return;
   const script = document.createElement("script");
