@@ -22,7 +22,8 @@ const loadMap = (buildingInfo, clickMarker) => {
       colorFontMap[name] = colorFont[4 - i];
     }
   }
-
+  /*******************************************매물 마커 */
+  var selectedInfowindow = null;
   for (let i = 0; i < buildingInfo.buildingList.length; i++) {
     const building = buildingInfo.buildingList[i];
     // 마커 이미지의 이미지 크기 입니다
@@ -34,17 +35,21 @@ const loadMap = (buildingInfo, clickMarker) => {
       : getImageUrl("5.png");
 
     const markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
+    const housePosition = new kakao.maps.LatLng(building.lat, building.lng);
     // 마커를 생성합니다
     const marker = new kakao.maps.Marker({
       map: map, // 마커를 표시할 지도
-      position: new kakao.maps.LatLng(building.lat, building.lng), // 마커를 표시할 위치
+      position: housePosition, // 마커를 표시할 위치
       title: building.buildingName, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
       image: markerImage, // 마커 이미지
     });
     kakao.maps.event.addListener(marker, "click", () => {
-      moveMap(marker.getPosition());
+      // 인포윈도우 띄우기
+      showInfoWindow(housePosition, marker, marker.getTitle());
+      // 디테일 보여주기
       clickMarker(building);
+      // 지도 이동
+      moveMap(housePosition);
     });
   }
   /**************** buildingInfo[지하철]이 존재하면? (지하철 검색이면) -> 지하철역 마커 띄우기*/
@@ -127,6 +132,22 @@ const loadMap = (buildingInfo, clickMarker) => {
   }
   function moveMap(subwayPoint) {
     map.panTo(subwayPoint);
+  }
+  function showInfoWindow(position, marker, name) {
+    if (selectedInfowindow) {
+      // 이전에 선택된 마커를 원래대로 되돌립니다.
+      selectedInfowindow.close();
+    }
+
+    // 인포윈도우를 생성합니다
+    let infowindow = new kakao.maps.InfoWindow({
+      position: position,
+      content: name,
+    });
+
+    // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+    infowindow.open(map, marker);
+    selectedInfowindow = infowindow;
   }
 };
 
