@@ -79,7 +79,7 @@
                 "
                 size="small"
               >
-                {{ house.floor }} 층
+                {{ house.area }} 평
               </v-btn>
             </v-slide-group-item>
           </v-slide-group>
