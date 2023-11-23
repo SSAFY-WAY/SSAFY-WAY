@@ -142,7 +142,19 @@ const loadMap = (buildingInfo, clickMarker) => {
     // 인포윈도우를 생성합니다
     let infowindow = new kakao.maps.InfoWindow({
       position: position,
-      content: name,
+      content: `<div
+      style="
+      display : flex;
+      width:180px;
+      height:100%;
+      justify-content:center;
+      align-items:center;
+      margin : 0 auto;
+      color : white;
+      font-weight : bold;
+      background-color :  #2196F3;
+      "
+      >${name}</div>`,
     });
 
     // 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다

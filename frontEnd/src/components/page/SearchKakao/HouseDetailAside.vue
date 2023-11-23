@@ -102,6 +102,8 @@
   <div v-else class="loginNotice">
     <span>더 많은 정보를 확인하려면</span>
     <span>로그인해주세요!</span>
+    <br />
+    <router-link class="login-link" to="login">로그인하러 가기!</router-link>
   </div>
 </template>
 
@@ -112,7 +114,6 @@ import { useUserStore } from "@/store/userStore.js";
 const props = defineProps({
   currentBuildingInfo: Object,
 });
-console.l;
 const currentBuildingInfo = computed(() => {
   return props.currentBuildingInfo;
 });
@@ -167,7 +168,7 @@ watch(currentBuildingInfo, () => {
   float: right;
   background-color: white;
   width: 30%;
-  height: auto;
+  height: 100vh;
   max-height: 605px;
   overflow-y: scroll;
   -ms-overflow-style: none;
@@ -290,5 +291,11 @@ watch(currentBuildingInfo, () => {
   font-weight: bold;
   font-size: 25px;
   flex-direction: column;
+}
+.login-link {
+  background-color: var(--accent4);
+  border-radius: 30px;
+  padding: 10px;
+  color: white;
 }
 </style>
